@@ -14,7 +14,8 @@
     "migrate_up": "ts-node src/db/migrate-up.ts",
     "migrate_down": "ts-node src/db/migrate-down.ts",
     "migrate_reset": "pnpm run migrate_down; pnpm run migrate_up; pnpm run generate_db_types",
-    "generate_db_types": "kysely-codegen --out-file ./src/db/db-types.ts"
+    "generate_db_types": "kysely-codegen --out-file ./src/db/db-types.ts",
+    "date": "node ./src/utilities/printIsoDateString.js"
   },
   "dependencies": {
     "@fastify/autoload": "^6.0.3",

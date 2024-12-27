@@ -4,16 +4,16 @@ import { FastifyRequest } from "fastify";
 import { IArtifactPostBody } from "@/api/api-types";
 import { v4 as uuidv4 } from "uuid";
 
-// server.get(
-//   "/artifact/:id",
-//   async (req: FastifyRequest<{ Params: { id: string } }>, res) => {
-//     return db
-//       .selectFrom("artifacts")
-//       .where("id", "=", req.params.id)
-//       .selectAll()
-//       .execute();
-//   }
-// );
+server.get(
+  "/artifact/:id",
+  async (req: FastifyRequest<{ Params: { id: string } }>, res) => {
+    return db
+      .selectFrom("artifacts")
+      .where("artifacts.id", "=", parseInt(req.params.id))
+      .selectAll()
+      .execute();
+  }
+);
 
 server.get("/artifacts", async (req, res) => {
   return db.selectFrom("artifacts").selectAll().execute();

@@ -1,10 +1,15 @@
 import "dotenv/config";
-
 import fastify from "fastify";
 import AutoLoad from "@fastify/autoload";
 import path from "path";
-import { Queue } from "bullmq";
-import { redisConnection } from "@/redis";
+
+//This fixes the annoying can't serialize BigInt error.
+// https://github.com/GoogleChromeLabs/jsbi/issues/30
+// wws 2024-12-27
+// @ts-ignore
+BigInt.prototype.toJSON = function () {
+  return this.toString();
+};
 
 export const server = fastify();
 server.register(AutoLoad, {

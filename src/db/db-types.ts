@@ -43,7 +43,7 @@ export type Timestamp = ColumnType<Date, Date | string, Date | string>;
 
 export interface Artifacts {
   display_name: string | null;
-  eid: string;
+  eid: string | null;
   id: Generated<number>;
 }
 
@@ -252,7 +252,7 @@ export interface AuthUsers {
 }
 
 export interface Exhibits {
-  eid: string;
+  eid: string | null;
   id: Generated<number>;
 }
 
@@ -313,8 +313,8 @@ export interface ExtensionsPgStatStatementsInfo {
 }
 
 export interface FileRepositories {
-  id: string;
-  path: string;
+  file_repo_path: string;
+  repository_id: string;
 }
 
 export interface PgsodiumDecryptedKey {
@@ -416,10 +416,14 @@ export interface RealtimeSubscription {
   subscription_id: string;
 }
 
-export interface Respositories {
+export interface Repositories {
   display_name: string | null;
   id: string;
-  name: string;
+}
+
+export interface S3Repositories {
+  provider: number | null;
+  repository_id: string;
 }
 
 export interface StorageBuckets {
@@ -530,10 +534,10 @@ export interface DB {
   "auth.sso_providers": AuthSsoProviders;
   "auth.users": AuthUsers;
   exhibits: Exhibits;
-  exhibitsArtifacts: ExhibitsArtifacts;
+  exhibits_artifacts: ExhibitsArtifacts;
   "extensions.pg_stat_statements": ExtensionsPgStatStatements;
   "extensions.pg_stat_statements_info": ExtensionsPgStatStatementsInfo;
-  fileRepositories: FileRepositories;
+  file_repositories: FileRepositories;
   "pgsodium.decrypted_key": PgsodiumDecryptedKey;
   "pgsodium.key": PgsodiumKey;
   "pgsodium.mask_columns": PgsodiumMaskColumns;
@@ -542,7 +546,8 @@ export interface DB {
   "realtime.messages": RealtimeMessages;
   "realtime.schema_migrations": RealtimeSchemaMigrations;
   "realtime.subscription": RealtimeSubscription;
-  respositories: Respositories;
+  repositories: Repositories;
+  s3_repositories: S3Repositories;
   "storage.buckets": StorageBuckets;
   "storage.migrations": StorageMigrations;
   "storage.objects": StorageObjects;

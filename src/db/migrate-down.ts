@@ -28,7 +28,7 @@ async function migrateDown() {
     }),
   });
 
-  const { error, results } = await migrator.migrateTo("0000-migration");
+  const { error, results } = await migrator.migrateTo("0");
 
   results?.forEach((it) => {
     if (it.status === "Success") {

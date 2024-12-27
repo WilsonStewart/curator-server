@@ -1,19 +1,18 @@
-import { Kysely } from "kysely";
+import { Kysely, sql } from "kysely";
 
 export async function up(db: Kysely<any>): Promise<void> {
   await db.schema
-    .createTable("respositories")
-    .addColumn("id", "uuid", (col) => col.primaryKey())
-    .addColumn("name", "varchar", (col) => col.notNull().unique())
-    .addColumn("display_name", "varchar")
+    .createTable("repositories")
+    .addColumn("id", "uuid", (col) => col.primaryKey().notNull())
+    .addColumn("display_name", "varchar", (col) => col.unique())
     .execute();
 
   await db.schema
-    .createTable("fileRepositories")
-    .addColumn("id", "uuid", (col) =>
-      col.notNull().primaryKey().references("respositories.id")
+    .createTable("file_repositories")
+    .addColumn("repository_id", "uuid", (col) =>
+      col.notNull().primaryKey().references("repositories.id")
     )
-    .addColumn("path", "varchar", (col) => col.notNull().unique())
+    .addColumn("file_repo_path", "varchar", (col) => col.notNull().unique())
     .execute();
 
   await db.schema
@@ -21,7 +20,7 @@ export async function up(db: Kysely<any>): Promise<void> {
     .addColumn("id", "integer", (col) =>
       col.primaryKey().generatedAlwaysAsIdentity()
     )
-    .addColumn("eid", "uuid", (col) => col.notNull().unique())
+    .addColumn("eid", "uuid")
     .execute();
 
   await db.schema
@@ -29,12 +28,12 @@ export async function up(db: Kysely<any>): Promise<void> {
     .addColumn("id", "integer", (col) =>
       col.primaryKey().generatedAlwaysAsIdentity()
     )
-    .addColumn("eid", "uuid", (col) => col.notNull().unique())
+    .addColumn("eid", "uuid")
     .addColumn("display_name", "varchar")
     .execute();
 
   await db.schema
-    .createTable("exhibitsArtifacts")
+    .createTable("exhibits_artifacts")
     .addColumn("exhibit", "integer", (col) =>
       col.notNull().references("exhibits.id")
     )
@@ -45,9 +44,9 @@ export async function up(db: Kysely<any>): Promise<void> {
 }
 
 export async function down(db: Kysely<any>): Promise<void> {
-  await db.schema.dropTable("exhibitsArtifacts").execute();
+  await db.schema.dropTable("exhibits_artifacts").execute();
   await db.schema.dropTable("artifacts").execute();
   await db.schema.dropTable("exhibits").execute();
-  await db.schema.dropTable("fileRepositories").execute();
-  await db.schema.dropTable("respositories").execute();
+  await db.schema.dropTable("file_repositories").execute();
+  await db.schema.dropTable("repositories").execute();
 }
