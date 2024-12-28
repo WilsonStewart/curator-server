@@ -2,7 +2,6 @@ import { db } from "@/db/database";
 import { FileRepositories, Repositories, S3Repositories } from "@/db/db-types";
 import { server } from "@/server";
 import { FastifyReply, FastifyRequest } from "fastify";
-import { resolve } from "path";
 import { v4 as uuidv4 } from "uuid";
 
 server.get(
